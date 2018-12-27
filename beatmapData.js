@@ -1,7 +1,7 @@
 const fs = require('fs');
 const bm = require('./beatmapClasses.js');
 
-const beatmapListPath = 'asdflist.json';
+const beatmapListPath = 'beatmaplist.json';
 
 
 // 
