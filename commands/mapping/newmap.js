@@ -37,9 +37,7 @@ class NewMapCommand extends commando.Command
             return; // breaks out of run(), effectively halting this command here
         }
 
-        maps.addBeatmap(maps.getTopID()+1, artist, title, message.member.displayName);
-
-        maps.getBeatmap(1).host
+        maps.addBeatmap(maps.getTopId()+1, artist, title, message.member.displayName);
     }
 }
 

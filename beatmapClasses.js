@@ -47,7 +47,7 @@ class BeatmapCollection
         }
     }
 
-    getTopID()
+    getTopId()
     {
         return this.beatmaps[this.beatmaps.length-1].id;
     }
