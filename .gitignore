@@ -1,5 +1,6 @@
 # custom things
 indexToken.json
+beatmaplist.json
 
 #
 #  below is typical node.js gitignore stuff, apparently
