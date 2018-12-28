@@ -3,34 +3,45 @@ class BeatmapCollection
     constructor()
     {
         this.beatmaps = [];
+        this.beatmapSearch = {};
     }
+
+    loadFromJSON(json){
+        //console.log(json.maps.beatmaps);
+        json.maps.beatmaps.forEach(beatmap => {
+            this.addJSONBeatmap(beatmap);
+        });
+    }
+
+    addJSONBeatmap(beatmap){
+        var oldTasks = beatmap.tasks;
+        console.log(beatmap);
+        beatmap.tasks = [];
+        
+        var newBeatmap = new Beatmap(beatmap.id, beatmap.artist, beatmap.title, beatmap.host);
+        oldTasks.forEach(task => {
+            newBeatmap.addJSONTask(task);
+        });
+
+        newBeatmap.rank = beatmap.rank;
+        newBeatmap.currentQuest = beatmap.currentQuest;
+        newBeatmap.members = beatmap.members;
+
+        this.beatmaps.push(newBeatmap);
+        this.beatmapSearch[newBeatmap.id] = newBeatmap;
+    }
+
 
     addBeatmap(id, artist, title, host)
     {
-        this.beatmaps.push(new Beatmap(id, artist, title, host));
+        var beatmapVar = (new Beatmap(id, artist, title, host));
+        this.beatmaps.push(beatmapVar);
+        this.beatmapSearch[id] = beatmapVar;
     }
 
     getBeatmap(id)
     {
-        var index = getBeatmapIndex(id);
-        if(index >= 0)
-        {
-            return this.beatmaps[index];
-        }
-        return false;
-    }
-
-    getBeatmapIndex(id)
-    {
-        var i;
-        for(i = 0; i < this.beatmaps.length; ++i)
-        {
-            if(this.beatmaps[i].id == id)
-            {
-                return i;
-            }
-        }
-        return -1;
+        return this.beatmapSearch[id];
     }
 
     removeBeatmap(id)
@@ -47,7 +58,7 @@ class BeatmapCollection
         }
     }
 
-    getTopId()
+    getTopID()
     {
         return this.beatmaps[this.beatmaps.length-1].id;
     }
@@ -68,6 +79,17 @@ class Beatmap
         this.bns = [];
         this.quest = "";
         this.modders = [];
+    }
+
+    addJSONTask(task)
+    {
+        var newTask = new Task(task.name);
+
+        newTask.mappers = task.mappers;
+        newTask.status = task.status;
+        newTask.locked = task.locked;
+
+        this.tasks.push(newTask);
     }
 
     getTask(name)
@@ -112,9 +134,12 @@ class Beatmap
         this.host = host;
     }
 
-    addTask(taskName)
+    addTask(taskName, user)
     {
-        this.tasks.push(new Task(taskName));
+        var newTask = new Task(taskName);
+        this.tasks.push(newTask);
+        newTask.mappers.push(user);
+        return newTask;
     }
 
     setStatus(status)
@@ -191,6 +216,7 @@ class Task
         this.status = "...";
         this.locked = false;
     }
+
 
     addMapper(mapper)
     {

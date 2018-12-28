@@ -1,4 +1,4 @@
-const bmData = require("../../beatmapData.js");
+const bmData = require("../../AllData.js");
 const commando = require('discord.js-commando');
 const discord = require('discord.js');
 
@@ -19,9 +19,7 @@ class NewMapCommand extends commando.Command
     {
         var maps = bmData.getMaps();
 
-        message.channel.send("```" + JSON.stringify(maps) + "```");
-        console.log(maps);
-
+        //process the argument
         var formatError = "Incorrect format! The format is `!newmap artist | title`";
         var splits = args.split("|");
         if(splits.length !== 2)
@@ -29,6 +27,7 @@ class NewMapCommand extends commando.Command
             message.channel.send(formatError);
             return; // breaks out of run(), effectively halting this command here
         }
+
         var artist = splits[0].trim();
         var title = splits[1].trim();
         if(artist.length == 0 || title.length == 0)
@@ -37,7 +36,14 @@ class NewMapCommand extends commando.Command
             return; // breaks out of run(), effectively halting this command here
         }
 
-        maps.addBeatmap(maps.getTopId()+1, artist, title, message.member.displayName);
+
+        //adds the map
+        var id = maps.getTopID()+1;
+        maps.addBeatmap(id, artist, title, message.member.displayName);
+
+
+        //confirmation message
+        message.channel.send(`Your map for **${artist}** - **${title}** has been added to the spreadsheet! Its ID is **${id}**`);
     }
 }
 
