@@ -23,12 +23,14 @@ class NewPartyCommand extends commando.Command
         var party = parties.partySearch[partyName.toLowerCase()];
         if(!(party == undefined))
         {
-            message.channel.send(`name in use`);
+            message.channel.send(`That name is already being used by another party! Choose a different name.`);
         }else if(parties.isLeader(user) || parties.isMember(user))
         {
-            message.channel.send(`already in a party`);
+            message.channel.send(`You can only be involved with one party at a time! Leave your current party before creating a new one.`);
         }else{
             parties.addParty(partyName, user);
+            parties.joinParty(partyName, user);
+            message.channel.send(`The **${partyName}** party has been created!`);
         }
     }
 }

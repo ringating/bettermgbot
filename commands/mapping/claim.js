@@ -89,8 +89,13 @@ class ClaimCommand extends commando.Command
             message.channel.send("You can't claim tasks that have been locked!");
         }else{
             var task = beatmap.addTask(printedTask, user);
-            if(collabUsers.length > 0){
+            if(collabUsers.length > 0)
+            {
                 task.mappers.push.apply(task.mappers, collabUsers);
+            }
+            if(beatmap.status == "Done")
+            {
+                beatmap.status = "WIP"
             }
             message.channel.send(`**${user}** has claimed **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**`);
         }

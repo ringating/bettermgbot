@@ -55,10 +55,11 @@ class PartiesCollection
         return false;
     }
 
-    test(){
-        return "hello";
+    joinParty(name, user)
+    {
+        var party = this.partySearch[name];
+        party.members.push(user);
     }
-
 }
 
 class Party

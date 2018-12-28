@@ -48,16 +48,9 @@ class BeatmapCollection
 
     removeBeatmap(id)
     {
-        //TODO
-        // search beatmaps for beatmap with matching id property
-        // if it's found remove that beatmap from beatmaps and return it
-        // else return false
-
-        var index = getBeatmapIndex(id);
-        if(index >= 0)
-        {
-            var bm = this.beatmaps[index].copy();
-        }
+        var index = this.beatmapSearch[id];
+        this.beatmaps.splice(index, 1);
+        delete this.beatmapSearch[id];
     }
 
     getTopID()
@@ -232,7 +225,7 @@ class Task
     {
         this.name = name;
         this.mappers = [];
-        this.status = "...";
+        this.status = "WIP";
         this.locked = false;
     }
 
@@ -257,7 +250,7 @@ class Task
     setStatus(status)
     {
         // returns 
-        if(status == "✓" || status == "...")
+        if(status == "Done" || status == "WIP")
         {
             this.status = status;
             return true;

@@ -1,6 +1,7 @@
 const bmData = require("../../AllData.js");
 const commando = require('discord.js-commando');
 const discord = require('discord.js');
+const responses = require('../../responses.js');
 
 class NewMapCommand extends commando.Command
 {
@@ -43,7 +44,7 @@ class NewMapCommand extends commando.Command
 
 
         //confirmation message
-        message.channel.send(`Your map for **${artist}** - **${title}** has been added to the spreadsheet! Its ID is **${id}**`);
+        message.channel.send(eval("`" + responses.mappingActions.new_map_added + "`"));
     }
 }
 
