@@ -2,7 +2,7 @@ const fs = require('fs');
 const bm = require('./beatmapClasses.js');
 const pt = require('./partiesClasses.js');
 
-const DataPath = 'testfile5.json';
+const DataPath = 'testfile6.json';
 
 class AllData
 {

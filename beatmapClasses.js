@@ -15,7 +15,6 @@ class BeatmapCollection
 
     addJSONBeatmap(beatmap){
         var oldTasks = beatmap.tasks;
-        console.log(beatmap);
         beatmap.tasks = [];
         
         var newBeatmap = new Beatmap(beatmap.id, beatmap.artist, beatmap.title, beatmap.host);
@@ -34,8 +33,11 @@ class BeatmapCollection
 
     addBeatmap(id, artist, title, host)
     {
-        var beatmapVar = (new Beatmap(id, artist, title, host));
+        var beatmapVar = new Beatmap(id, artist, title, host);
         this.beatmaps.push(beatmapVar);
+        console.log(beatmapVar);
+        console.log(typeof(beatmapVar));
+        
         this.beatmapSearch[id] = beatmapVar;
     }
 
@@ -75,10 +77,12 @@ class Beatmap
 
         this.tasks = [];
         this.status = "WIP";
-        this.locked = false;
         this.bns = [];
         this.quest = "";
         this.modders = [];
+
+        this.allLocked = false;
+        this.categoriesLocked = [];
     }
 
     addJSONTask(task)
@@ -92,9 +96,9 @@ class Beatmap
         this.tasks.push(newTask);
     }
 
-    getTask(name)
+    getTask(name, user)
     {
-        var index = getTaskIndex(name);
+        var index = this.getTaskIndex(name, user);
         if(index >= 0)
         {
             return this.tasks[index];
@@ -102,12 +106,12 @@ class Beatmap
         return false;
     }
 
-    getTaskIndex(name)
+    getTaskIndex(name, user)
     {
         var i;
         for(i = 0; i < this.tasks.length; ++i)
         {
-            if(this.tasks[i].name == name)
+            if(this.tasks[i].name == name && this.tasks[i].mappers.indexOf(user) >= 0)
             {
                 return i;
             }
@@ -142,6 +146,13 @@ class Beatmap
         return newTask;
     }
 
+
+    //how to find this?
+    removeTask(taskName, user)
+    {
+
+    }
+
     setStatus(status)
     {
         // returns true if status matches any of the valid strings (thus getting set)
@@ -154,17 +165,24 @@ class Beatmap
         return false;
     }
 
-    setLock(locked)
+    lockCategory(category)
     {
-        if(locked == true || locked == false)
+        if(this.categoriesLocked.indexOf(category) < 0)
         {
-            this.locked = locked;
-            return true;
+            this.categoriesLocked.push(category);
         }
-        return false;
     }
 
-    flipLock(){ this.locked = !this.locked;}
+    unlockCategory(category)
+    {
+        var lockedItemIndex = this.categoriesLocked.indexOf(category);
+        if(lockedItemIndex >=0)
+        {
+            this.categoriesLocked.splice(lockedItemIndex, 1);
+        }
+    }
+
+    flipLock(){ this.allLocked = !this.allLocked;}
 
     addBNs(bn)
     {
@@ -207,6 +225,7 @@ class Beatmap
     }
 }
 
+
 class Task
 {
     constructor(name)
@@ -216,6 +235,7 @@ class Task
         this.status = "...";
         this.locked = false;
     }
+
 
 
     addMapper(mapper)
@@ -245,15 +265,6 @@ class Task
         return false;
     }
 
-    setLock(locked)
-    {
-        if(locked == true || locked == false)
-        {
-            this.locked = locked;
-            return true;
-        }
-        return false;
-    }
 
     flipLock(){ this.locked = !this.locked;}
 }
