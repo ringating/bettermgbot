@@ -35,9 +35,6 @@ class BeatmapCollection
     {
         var beatmapVar = new Beatmap(id, artist, title, host);
         this.beatmaps.push(beatmapVar);
-        console.log(beatmapVar);
-        console.log(typeof(beatmapVar));
-        
         this.beatmapSearch[id] = beatmapVar;
     }
 

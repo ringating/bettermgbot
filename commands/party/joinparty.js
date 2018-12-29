@@ -20,28 +20,30 @@ class JoinPartyCommand extends commando.Command
         var user = message.member.displayName;
         var partyName = args;
         var parties = allData.getParties();
-        console.log(parties.test());
         var party = parties.partySearch[partyName.toLowerCase()];
-        console.log(party);
-        if(party == undefined)
+        if(args.length == 0)
         {
-            message.channel.send(`that party doesnt exist`);
+            message.channel.send(`You must specify a party name!`);
+        }
+        else if(party == undefined)
+        {
+            message.channel.send(`That party doesn't exist! Make sure you spelled it correctly.`);
         }
         else if(parties.isLeader(user) || parties.isMember(user))
         {
-            message.channel.send(`already in a party`);
+            message.channel.send(`You can only be involved with one party at a time! Leave your current party before joining a new one.`);
         }
         else if((party.currentQuest) != '')
         {
-            message.channel.send(`cant join a party that's running a quest`);
+            message.channel.send(`You cannot join a party that is currently running a quest!`);
         }
         else if(party.reachesMemberLimit())
         {
-            message.channel.send(`cant join a party that's running a quest`);
+            message.channel.send(`That party has too many members to join!`);
         }else
         {
-            console.log(party.currentQuest + "e");
             party.members.push(user);
+            message.channel.send(`**${user}** has joined the **${party.name}** party!`);
         }
     }
 }
