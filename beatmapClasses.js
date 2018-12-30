@@ -22,9 +22,14 @@ class BeatmapCollection
             newBeatmap.addJSONTask(task);
         });
 
-        newBeatmap.rank = beatmap.rank;
-        newBeatmap.currentQuest = beatmap.currentQuest;
-        newBeatmap.members = beatmap.members;
+        newBeatmap.status = beatmap.status;
+        newBeatmap.quest = beatmap.quest;
+        newBeatmap.link = beatmap.link;
+        newBeatmap.allLocked = beatmap.allLocked;
+        newBeatmap.bns = beatmap.bns;
+        newBeatmap.modders = beatmap.modders;
+        newBeatmap.categoriesLocked = beatmap.categoriesLocked;
+        
 
         this.beatmaps.push(newBeatmap);
         this.beatmapSearch[newBeatmap.id] = newBeatmap;
@@ -70,6 +75,7 @@ class Beatmap
         this.bns = [];
         this.quest = "";
         this.modders = [];
+        this.link = "";
 
         this.allLocked = false;
         this.categoriesLocked = [];
@@ -136,24 +142,6 @@ class Beatmap
         return newTask;
     }
 
-
-    //how to find this?
-    removeTask(taskName, user)
-    {
-
-    }
-
-    setStatus(status)
-    {
-        // returns true if status matches any of the valid strings (thus getting set)
-        // returns false if status is invalid
-        if(status == "work-in-progress" || status == "complete")
-        {
-            this.status = status;
-            return true;
-        }
-        return false;
-    }
 
     lockCategory(category)
     {

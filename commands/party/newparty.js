@@ -21,7 +21,10 @@ class NewPartyCommand extends commando.Command
         var partyName = args;
         var parties = allData.getParties();
         var party = parties.partySearch[partyName.toLowerCase()];
-        if(!(party == undefined))
+        if(args.length == 0){
+            message.channel.send(`You must specify a name for your party!`);
+        }
+        else if(!(party == undefined))
         {
             message.channel.send(`That name is already being used by another party! Choose a different name.`);
         }else if(parties.isLeader(user) || parties.isMember(user))

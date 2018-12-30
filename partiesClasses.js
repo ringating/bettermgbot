@@ -60,6 +60,28 @@ class PartiesCollection
         var party = this.partySearch[name];
         party.members.push(user);
     }
+
+    getPartyIndex(name)
+    {
+        for (var i = 0; i < this.parties.length; i++)
+        {
+            var party = this.parties[i];
+            if(party.name == name){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    removeParty(name)
+    {
+        var index = this.getPartyIndex(name);
+        if(index >= 0)
+        {
+            this.parties.splice(index, 1);
+            delete this.partySearch[name.toLowerCase()];
+        }
+    }
 }
 
 class Party

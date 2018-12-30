@@ -19,7 +19,6 @@ class NewQuestCommand extends commando.Command
     {
         //get data
         var user = message.member.displayName;
-        var questName = args;
         var quests = allData.getQuests();
 
 

@@ -83,8 +83,8 @@ class ClaimCommand extends commando.Command
             message.channel.sendMessage(`**${printedTask}** is an invalid task! Tasks include \`easy\`, \`normal\`, \`hard\`, \`insane\`, \`extra\`, \`storyboard\`, \`background\`, and \`skin\``);
         }else if(beatmap.allLocked && beatmap.host != user){
             message.channel.send("You can't claim tasks on mapsets that have been locked!");
-        }else if(beatmap.bns.length > 0 && beatmap.bns.indexOf(user) > 0){
-            message.channel.send("You must remove your reserved nomination before claiming a task! Use the command `!unreservenom [mapID]` to do so.");
+        }else if(beatmap.bns.length > 0 && beatmap.bns.indexOf(user) >= 0){
+            message.channel.send("You must remove your reserved nomination before claiming a task! Use the command `!unnom mapID`");
         }else if(beatmap.categoriesLocked.indexOf(printedTask) >= 0){
             message.channel.send("You can't claim tasks that have been locked!");
         }else{

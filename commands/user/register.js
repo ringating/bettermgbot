@@ -25,13 +25,13 @@ class RegisterCommand extends commando.Command
         //do shit
         if(users.getUser(user) != undefined)
         {
-            message.channel.send(`already registered`);
+            message.channel.send(`You're already registered!`);
         }else{
             users.addUser(user);
 
 
         //confirmation message
-        message.channel.send(`**${user}** is now registered!`);
+        message.channel.send(`**${user}** is now registered with the Mappers' Guild!`);
         }
     }
 }

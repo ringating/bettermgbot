@@ -5,7 +5,7 @@ const qt = require('./questClasses.js');
 const ur = require('./userClasses.js');
 const points = require('./pointsClasses.js');
 
-const DataPath = 'testfile14.json';
+const DataPath = 'testfile26.json';
 
 class AllData
 {
@@ -26,7 +26,7 @@ class AllData
                 console.log("fs.readFile returned error: " + err);
                 this.maps.addBeatmap(0,"EXAMPLE_ARTIST","EXAMPLE_TITLE","EXAMPLE_HOST");
                 this.parties.addParty("party name", "username");
-                this.quests.addQuest(0, "quest name");
+                this.quests.addQuest(0, "quest name", "quest description!!!", 25, 4, 8, 0);
                 this.users.addUser("sample user");
                 console.log("*new map list json generated*");
                 return;

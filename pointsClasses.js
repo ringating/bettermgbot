@@ -45,15 +45,15 @@ class PointsCalculation
         var backgroundPoints = 0;
         var skinPoints = 0;
 
-        console.log(pointsData.length);
+        //console.log(pointsData.length);
 
         pointsData.forEach(taskAndStatus => {
-            console.log(taskAndStatus);
+            //console.log(taskAndStatus);
             if(taskAndStatus.mapsetStatus == "Done")
             {
                 easyPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Easy", 5, 2);
-                console.log(easyPoints);
-                console.log(taskAndStatus.task.name)
+                //console.log(easyPoints);
+                //console.log(taskAndStatus.task.name)
                 normalPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Normal", 6, 2);
                 hardPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Hard", 7, 2);
                 insanePoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Insane", 8, 2);
