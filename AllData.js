@@ -5,7 +5,7 @@ const qt = require('./questClasses.js');
 const ur = require('./userClasses.js');
 const points = require('./pointsClasses.js');
 
-const DataPath = 'testfile30.json';
+const DataPath = 'testfile34.json';
 
 class AllData
 {

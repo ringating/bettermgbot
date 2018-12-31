@@ -75,7 +75,7 @@ class ClaimCommand extends commando.Command
         function printTask(name){
             return name.charAt(0).toUpperCase() + name.substr(1)
         }
-        console.log(printedTask);
+        //console.log(printedTask);
         
         if(beatmap == undefined){
             message.channel.send("That map doesn't exist! Re-check your Map ID.");
@@ -97,7 +97,11 @@ class ClaimCommand extends commando.Command
             {
                 beatmap.status = "WIP"
             }
-            message.channel.send(`**${user}** has claimed **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**`);
+            if(beatmap.allLocked){
+                message.channel.send(`**${user}** has claimed **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**. (host bypasses lock)`);
+            }else{
+                message.channel.send(`**${user}** has claimed **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**`);
+            }
         }
     }
 }

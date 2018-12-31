@@ -60,7 +60,7 @@ class UnlockCommand extends commando.Command
             message.channel.send("You can't edit someone else's mapset!");
         }else if(name == ""){
             beatmap.allLocked = false;
-            message.channel.send("unlockd");
+            message.channel.send(`All claims for **${beatmap.artist}** - **${beatmap.title}** have been unlocked!`);
         }else if(invalidTask()){
             message.channel.sendMessage(`**${printedTask}** is an invalid task! Tasks include \`easy\`, \`normal\`, \`hard\`, \`insane\`, \`extra\`, \`storyboard\`, \`background\`, and \`skin\``);
         }else if(beatmap.categoriesLocked.indexOf(printedTask) < 0){

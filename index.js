@@ -3,7 +3,7 @@ const bot = new Discord.Client({
     commandPrefix: '!',
     owner: '92858431257456640',
     disableEveryone: true,
-    unknownCommandResponse: false
+    unknownCommandResponse: true
 });
 const fs = require('fs');
 const TOKEN = JSON.parse(fs.readFileSync('indexToken.json','utf-8')).token;

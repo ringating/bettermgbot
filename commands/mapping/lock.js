@@ -60,7 +60,7 @@ class LockCommand extends commando.Command
             message.channel.send("You can't edit someone else's mapset!");
         }else if(name == ""){
             beatmap.allLocked = true;
-            message.channel.send("locked");
+            message.channel.send(`All claims for **${beatmap.artist}** - **${beatmap.title}** have been locked!`);
         }else if(invalidTask()){
             message.channel.sendMessage(`**${printedTask}** is an invalid task! Tasks include \`easy\`, \`normal\`, \`hard\`, \`insane\`, \`extra\`, \`storyboard\`, \`background\`, and \`skin\``);
         }else if(beatmap.categoriesLocked.indexOf(printedTask) >= 0){

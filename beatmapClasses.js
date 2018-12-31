@@ -211,7 +211,6 @@ class Task
         this.name = name;
         this.mappers = [];
         this.status = "WIP";
-        this.locked = false;
     }
 
 
