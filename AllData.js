@@ -5,7 +5,7 @@ const qt = require('./questClasses.js');
 const ur = require('./userClasses.js');
 const points = require('./pointsClasses.js');
 
-const DataPath = 'testfile26.json';
+const DataPath = 'testfile30.json';
 
 class AllData
 {
@@ -52,7 +52,43 @@ class AllData
     {   
         var userPoints = new points.PointsCalculation(this.maps.beatmaps);
         this.users.users.forEach(user =>{
+            user.resetPoints();
             userPoints.calculateAllTaskPoints(user);
+        })
+
+        //quest points
+        this.quests.quests.forEach(quest =>{
+            if(quest.status == "Done")
+            {
+                this.updateQuestPoints(quest.name, quest.reward, quest.members);
+            }
+        })
+
+        //host points
+        this.maps.beatmaps.forEach(beatmap =>{
+            if(beatmap.status == "Done")
+            {
+                var user = this.users.getUser(beatmap.host);
+                user.hostPoints += 5;
+            }
+        });
+
+
+        //modder points
+        this.maps.beatmaps.forEach(beatmap =>{
+            if(beatmap.status == "Done")
+            {
+                this.users.users.forEach(user =>{
+                    if(beatmap.modders.indexOf(user.name) >= 0)
+                    user.modPoints += 2.5;
+                });
+            }
+        });
+
+
+        //total points and rank
+        this.users.users.forEach(user =>{
+            user.totalPoints += user.easyPoints + user.normalPoints + user.hardPoints + user.insanePoints + user.extraPoints + user.storyboardPoints + user.backgroundPoints + user.skinPoints + user.questPoints + user.modPoints + user.hostPoints;
             if(user.totalPoints < 100){
                 user.rank = 0;
             }else if(user.totalPoints < 250){
@@ -62,9 +98,45 @@ class AllData
             }else{
                 user.rank = 3;
             }
-        })
+        });
 
+
+        //current party
+        this.parties.parties.forEach(party =>{
+            this.users.users.forEach(user =>{
+                if (party.members.indexOf(user.name) >= 0)
+                {
+                    user.currentParty = party.name;
+                }
+            });
+        });
     }
+
+    updateQuestPoints(name, reward, members)
+    {
+        members.forEach(username =>{
+            var user = this.users.getUser(username);
+            user.questPoints += reward;
+            user.completedQuests.push(name);
+        })
+    }
+
+
+}
+
+function updatePartyRank()
+{
+    
+    allData.parties.parties.forEach(party =>{
+        var partyCumulativeRank = 0;
+        party.members.forEach(username =>{
+            var user = allData.users.getUser(username);
+            partyCumulativeRank += user.rank;
+            //console.log(user.rank);
+        })
+        party.rank = Math.round(partyCumulativeRank/party.members.length);
+        //console.log("party rank: " + party.rank);
+    })
 }
 
 // 
@@ -72,7 +144,9 @@ var allData = new AllData(DataPath);
 allData.loadFile();
 setInterval(updateFile, 5000);
 setInterval(updateUsers, 5000);
+setInterval(updatePartyRank, 6000);
 // 
+
 
 
 

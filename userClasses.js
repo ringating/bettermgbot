@@ -55,22 +55,27 @@ class User
     {
         this.name = name;
 
-        this.totalPoints = "";
-        this.rank = "";
-        this.easyPoints = "";
-        this.normalPoints = "";
-        this.hardPoints = "";
-        this.insanePoints = "";
-        this.extraPoints = "";
-        this.storyboardPoints = "";
-        this.backgroundPoints = "";
-        this.skinPoints = "";
-        this.questPoints = "";
-        this.modPoints = "";
-        this.hostPoints = "";
-        this.completedQuests = [];
+        this.resetPoints();
+        
         this.currentParty = "";
 
+    }
+
+    resetPoints(){
+        this.totalPoints = 0;
+        this.rank = 0;
+        this.easyPoints = 0;
+        this.normalPoints = 0;
+        this.hardPoints = 0;
+        this.insanePoints = 0;
+        this.extraPoints = 0;
+        this.storyboardPoints = 0;
+        this.backgroundPoints = 0;
+        this.skinPoints = 0;
+        this.questPoints = 0;
+        this.modPoints = 0;
+        this.hostPoints = 0;
+        this.completedQuests = [];
     }
 }
 

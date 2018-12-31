@@ -56,7 +56,27 @@ class LeavePartyCommand extends commando.Command
         var quest = questsCollection.getQuest(questID);
 
         
-        
+        //delete
+        function justLeaveParty(){
+            //find which maps mapper made and remove quest from them
+            var maps = allData.getMaps();
+            maps.beatmaps.forEach(beatmap =>{
+                if(beatmap.host == user)
+                {
+                    if(beatmap.status != "Ranked"){
+                        beatmap.quest = "";
+                    }
+                }
+            })
+
+            party.members.splice(userIndex, 1);
+            if(quest!=undefined){
+                quest.members.splice(questUserIndex, 1);
+            }
+            message.channel.send(`**${user}** has left the **${partyName}** party!`);
+        }
+
+
 
         //do shit
         if(party == undefined)
@@ -72,49 +92,49 @@ class LeavePartyCommand extends commando.Command
         {
             message.channel.send("You must transfer leadership before leaving this party! Use the command `!newLeader partyName | user`");
         }
-        else if(party.members.length == quest.minParty)
+        else if(quest != undefined)
         {
-            party.members.splice(userIndex, 1);
-            party.currentQuest = "";
-
-            quest.members = [];
-            quest.status = "open";
-            quest.assignedParty = "";
-
-            //find which maps mapper made and remove quest from them
-            var maps = allData.getMaps();
-            maps.beatmaps.forEach(beatmap =>{
-                if(beatmap.host == user)
-                {
-                    if(beatmap.status != "Ranked"){
-                        beatmap.quest = "";
+            if(party.members.length == quest.minParty)
+            {
+                party.members.splice(userIndex, 1);
+                party.currentQuest = "";
+    
+                quest.members = [];
+                quest.status = "open";
+                quest.assignedParty = "";
+    
+                //find which maps mapper made and remove quest from them
+                var maps = allData.getMaps();
+                maps.beatmaps.forEach(beatmap =>{
+                    if(beatmap.host == user)
+                    {
+                        if(beatmap.status != "Ranked"){
+                            beatmap.quest = "";
+                        }
                     }
+                })
+    
+                message.channel.send(`**${user}** has left the **${partyName}** party! The **${partyName}** party has abandoned **${quest.name}**!`);
+            }else{
+                justLeaveParty();
+                if(quest.minRank > party.rank)
+                {
+                    quest.members = [];
+                    quest.status = "open";
+                    quest.assignedParty = "";
+                    message.channel.send(`**${user}** has left the **${partyName}** party! The **${partyName}** party has abandoned **${quest.name}**!`);
+                    return;
                 }
-            })
-
-            message.channel.send(`**${user}** has left the **${partyName}** party! The **${partyName}** party has abandoned **${quest.name}**!`);
+                message.channel.send(`**${user}** has left the **${partyName}** party!`);
+            }
         }
         else
         {
-
-            //find which maps mapper made and remove quest from them
-            var maps = allData.getMaps();
-            maps.beatmaps.forEach(beatmap =>{
-                if(beatmap.host == user)
-                {
-                    if(beatmap.status != "Ranked"){
-                        beatmap.quest = "";
-                    }
-                }
-            })
-
-            party.members.splice(userIndex, 1);
-            quest.members.splice(questUserIndex, 1);
-
-            
-
+            justLeaveParty();
             message.channel.send(`**${user}** has left the **${partyName}** party!`);
         }
+
+        
     }
 }
 

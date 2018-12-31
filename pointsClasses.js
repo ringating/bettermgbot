@@ -45,6 +45,7 @@ class PointsCalculation
         var backgroundPoints = 0;
         var skinPoints = 0;
 
+
         //console.log(pointsData.length);
 
         pointsData.forEach(taskAndStatus => {
@@ -63,7 +64,7 @@ class PointsCalculation
                 skinPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Skin", 2, 0);
             }
         }) 
-        totalPoints += easyPoints + normalPoints + hardPoints + insanePoints + extraPoints + storyboardPoints + backgroundPoints + skinPoints;
+        
         
         user.totalPoints = totalPoints;
         user.easyPoints = easyPoints;

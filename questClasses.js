@@ -13,13 +13,8 @@ class QuestsCollection
     }
 
     addJSONParty(quest){
-        var newQuest = new Quest(quest.id, quest.name);
+        var newQuest = new Quest(quest.id, quest.name, quest.description, quest.reward, quest.minParty, quest.maxParty, quest.minRank);
         
-        newQuest.description = quest.description;
-        newQuest.reward = quest.reward;
-        newQuest.minParty = quest.minParty;
-        newQuest.maxParty = quest.maxParty;
-        newQuest.minRank = quest.minRank;
         newQuest.status = quest.status;
         newQuest.assignedParty = quest.assignedParty;
         newQuest.members = quest.members;
@@ -39,6 +34,28 @@ class QuestsCollection
         return this.questSearch[id];
     }
 
+    removeQuest(id)
+    {
+        var index = this.getQuestIndex(id);
+        if(index >= 0)
+        {
+            this.quests.splice(index, 1);
+            delete this.questSearch[id];
+        }
+    }
+
+    getQuestIndex(id)
+    {
+        for (var i = 0; i < this.quests.length; i++)
+        {
+            var quest = this.quests[i];
+            if(quest.id == id){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     getTopID()
     {
         return this.quests[this.quests.length-1].id;
@@ -53,7 +70,7 @@ class Quest
         this.id = id;
         this.name = name;
         this.description = description;
-        this.reward = reward;
+        this.reward = parseInt(reward);
         this.minParty = minParty;
         this.maxParty = maxParty;
         this.minRank = minRank;
