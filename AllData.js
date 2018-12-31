@@ -53,6 +53,15 @@ class AllData
         var userPoints = new points.PointsCalculation(this.maps.beatmaps);
         this.users.users.forEach(user =>{
             userPoints.calculateAllTaskPoints(user);
+            if(user.totalPoints < 100){
+                user.rank = 0;
+            }else if(user.totalPoints < 250){
+                user.rank = 1;
+            }else if(user.totalPoints < 500){
+                user.rank = 2;
+            }else{
+                user.rank = 3;
+            }
         })
 
     }

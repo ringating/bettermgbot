@@ -54,6 +54,8 @@ class LeavePartyCommand extends commando.Command
         })
 
         var quest = questsCollection.getQuest(questID);
+
+        
         
 
         //do shit
@@ -79,12 +81,37 @@ class LeavePartyCommand extends commando.Command
             quest.status = "open";
             quest.assignedParty = "";
 
+            //find which maps mapper made and remove quest from them
+            var maps = allData.getMaps();
+            maps.beatmaps.forEach(beatmap =>{
+                if(beatmap.host == user)
+                {
+                    if(beatmap.status != "Ranked"){
+                        beatmap.quest = "";
+                    }
+                }
+            })
+
             message.channel.send(`**${user}** has left the **${partyName}** party! The **${partyName}** party has abandoned **${quest.name}**!`);
         }
         else
         {
+
+            //find which maps mapper made and remove quest from them
+            var maps = allData.getMaps();
+            maps.beatmaps.forEach(beatmap =>{
+                if(beatmap.host == user)
+                {
+                    if(beatmap.status != "Ranked"){
+                        beatmap.quest = "";
+                    }
+                }
+            })
+
             party.members.splice(userIndex, 1);
             quest.members.splice(questUserIndex, 1);
+
+            
 
             message.channel.send(`**${user}** has left the **${partyName}** party!`);
         }

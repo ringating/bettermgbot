@@ -69,6 +69,15 @@ class DropQuestCommand extends commando.Command
         }
         else
         {
+            //find which maps are connected to quest and disconnect them
+            var maps = allData.getMaps();
+            maps.beatmaps.forEach(beatmap =>{
+                if(beatmap.quest == quest.name)
+                {
+                    beatmap.quest = "";
+                }
+            })
+
             quest.members = [];
             quest.status = "open";
             quest.assignedParty = "";

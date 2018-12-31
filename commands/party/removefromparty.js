@@ -88,14 +88,40 @@ class RemoveFromPartyCommand extends commando.Command
         {
             message.channel.send(`**${user}** has been removed from the **${partyName}** party! The **${partyName}** party has abandoned **${quest.name}**!`);
 
+            //find which maps mapper made and remove quest from them
+            var maps = allData.getMaps();
+            maps.beatmaps.forEach(beatmap =>{
+                if(beatmap.host == party.members[otherUserIndex])
+                {
+                    if(beatmap.status != "Ranked"){
+                        beatmap.quest = "";
+                    }
+                }
+            });
+
             party.members.splice(otherUserIndex, 1);
             party.currentQuest = "";
 
             quest.members = [];
             quest.status = "open";
             quest.assignedParty = "";
+
+            
+
+
         }else
         {
+            //find which maps mapper made and remove quest from them
+            var maps = allData.getMaps();
+            maps.beatmaps.forEach(beatmap =>{
+                if(beatmap.host == party.members[otherUserIndex])
+                {
+                    if(beatmap.status != "Ranked"){
+                        beatmap.quest = "";
+                    }
+                }
+            });
+
             message.channel.send(`**${party.members[otherUserIndex]}** has been removed from the **${partyName}** party!`);
             party.members.splice(otherUserIndex, 1);
             quest.members.splice(questUserIndex, 1);
