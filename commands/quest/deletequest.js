@@ -39,11 +39,11 @@ class DeleteQuestCommand extends commando.Command
 
         if(args.length == 0)
         {
-            message.channel.send(`You must specify a quest ID!`);
+            message.channel.send(`Only pishifat can do that.`);
         }
         else if(user != "pishifat")
         {
-            message.channel.send(`You're not allowed to do that ;)`);
+            message.channel.send(`Only pishifat can do that.`);
         }
         else
         {

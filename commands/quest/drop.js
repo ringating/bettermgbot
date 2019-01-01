@@ -63,6 +63,10 @@ class DropQuestCommand extends commando.Command
         {
             message.channel.send(`Your party is not assigned a quest!`);
         }
+        else if(party.currentQuest == "")
+        {
+            message.channel.send(`Your party is not assigned a quest!`);
+        }
         else if(party.leader != user)
         {
             message.channel.send(`Only a party's leader can drop quests!`);

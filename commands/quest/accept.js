@@ -67,7 +67,7 @@ class AcceptQuestCommand extends commando.Command
         }
         else if(party.members.length < quest.minParty)
         {
-            message.channel.send(`Your party does not have enough members for this quest!`);
+            message.channel.send(`Your party needs at least ${quest.minParty} members to accept this quest!`);
         }
         else if(party.members.length > quest.maxParty)
         {

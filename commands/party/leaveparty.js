@@ -90,7 +90,7 @@ class LeavePartyCommand extends commando.Command
         }
         else if(partiesCollection.isLeader(user))
         {
-            message.channel.send("You must transfer leadership before leaving this party! Use the command `!newLeader partyName | user`");
+            message.channel.send("You must transfer leadership before leaving this party! Use the command `!newLeader user`");
         }
         else if(quest != undefined)
         {
@@ -114,7 +114,7 @@ class LeavePartyCommand extends commando.Command
                     }
                 })
     
-                message.channel.send(`**${user}** has left the **${partyName}** party! The **${partyName}** party has abandoned **${quest.name}**!`);
+                message.channel.send(`**${user}** has left the **${partyName}** party! The **${partyName}** party has abandoned the **${quest.name}** quest!`);
             }else{
                 justLeaveParty();
                 if(quest.minRank > party.rank)
@@ -122,16 +122,15 @@ class LeavePartyCommand extends commando.Command
                     quest.members = [];
                     quest.status = "open";
                     quest.assignedParty = "";
-                    message.channel.send(`**${user}** has left the **${partyName}** party! The **${partyName}** party has abandoned **${quest.name}**!`);
+                    message.channel.send(`**${user}** has left the **${partyName}** party! The **${partyName}** party has abandoned the **${quest.name}** quest!`);
                     return;
                 }
-                message.channel.send(`**${user}** has left the **${partyName}** party!`);
+
             }
         }
         else
         {
             justLeaveParty();
-            message.channel.send(`**${user}** has left the **${partyName}** party!`);
         }
 
         

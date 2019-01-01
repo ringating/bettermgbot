@@ -34,16 +34,15 @@ class CompleteQuestCommand extends commando.Command
 
         if(args.length == 0)
         {
-            message.channel.send(`You must specify a quest ID!`);
+            message.channel.send(`Only pishifat can do that.`);
         }
         else if(user != "pishifat")
         {
-            message.channel.send(`You're not allowed to do that ;)`);
+            message.channel.send(`Only pishifat can do that.`);
         }
         else
         {
             //remove quest from party's assigned quest
-            var partyName;
             parties.forEach(party => {
                 if(party.currentQuest == quest.name){
                     party.currentQuest = "";

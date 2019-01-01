@@ -26,7 +26,7 @@ class NewQuestCommand extends commando.Command
         var splits = args.split("|");
         if(splits.length < 6)
         {
-            message.channel.send("You're not allowed to do that.");
+            message.channel.send("Only pishifat can do that.");
             return; // breaks out of run(), effectively halting this command here
         }
         var questName = splits[0].trim();
@@ -42,7 +42,7 @@ class NewQuestCommand extends commando.Command
         //do shit
         if(user != "pishifat")
         {
-            message.channel.send(`You're not allowed to do that.`);
+            message.channel.send(`Only pishifat can do that.`);
         }else{
             //adds the map
             var id = quests.getTopID()+1;

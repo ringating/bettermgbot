@@ -21,7 +21,7 @@ class helpCommand extends commando.Command
             {
                 message.channel.sendMessage("**Commands** (type `!help <command>` for usage)");
         var helpList = new discord.RichEmbed()
-            .addField("Mapset Host Actions", "!newMap\n!applyQuest\n!removeQuest\n!newHost\n!deleteMap\n!lock\n!unlock\n!linkMap", true)
+            .addField("Mapset Host Actions", "!newMap\n!applyQuest\n!removeQuest\n!newHost\n!deleteMap\n!lock\n!unlock\n!link\n!changeArtist\n!changeTitle", true)
             .addField("General Mapper Actions", "!claim\n!unclaim\n!done\n!wip", true)
             .addField("Modder Actions", "\n!mod\n!nom\n!unNom", true)
             .addField("Party Actions", "!newParty\n!joinParty\n!leaveParty\n!newLeader\n!removeFromParty", true)
@@ -36,7 +36,7 @@ class helpCommand extends commando.Command
             message.channel.sendMessage("`!register` adds a user to the Mappers' Guild database. Commands don't work if a user is not registered. When someone eventually renames themselves, they will need to re-register and pishifat will struggle to transfer all data.");
         //party actions
         }else if(args == "newparty" || args == "!newparty"){
-            message.channel.sendMessage("`!newParty <partyName>` creates a new party and adds the sender to its member list\nexample: `!newParty the anime bros");
+            message.channel.sendMessage("`!newParty <partyName>` creates a new party and adds the sender to its member list\nexample: `!newParty the anime bros`");
         }else if(args == "joinparty" || args == "!joinparty"){
             message.channel.sendMessage("`!joinParty <partyName>` adds the sender to the party's member list\nexample: `!joinParty the rival party");
         }else if(args == "leaveparty" || args == "!leaveparty"){
@@ -61,6 +61,10 @@ class helpCommand extends commando.Command
         //mapping actions
         else if(args == "newmap" || args == "!newmap"){
             message.channel.sendMessage("`!newmap <artist> | <title>` creates a new entry for a map.\nexample: `!newmap Camellia | Exit This Earth's Atomosphere`");
+        }else if(args == "changeartist" || args == "!changeartist"){
+            message.channel.sendMessage("`!changeArtist <mapID> | <artist>` changes the artist metadata of an existing mapset. This can only be done by a mapset's host and should only be used to fix typos, not to replace existing mapsets\nexample: `!changeArtist 86 | *namirin`");
+        }else if(args == "changetitle" || args == "!changetitle"){
+            message.channel.sendMessage("`!changeTitle <mapID> | <title>` changes the artist metadata of an existing mapset. This can only be done by a mapset's host and should only be used to fix typos, not to replace existing mapsets\nexample: `!changeArtist 86 | closing eyes`");
         }else if(args == "applyquest" || args == "!applyquest"){
             message.channel.sendMessage("`!applyQuest <mapID>` links a map to a user's party's quest\nexample: `!applyQuest 86`");
         }else if(args == "removequest" || args == "!removequest"){
@@ -70,15 +74,15 @@ class helpCommand extends commando.Command
         }else if(args == "deletemap" || args == "!deletemap"){
             message.channel.sendMessage("`!deleteMap <mapID>` removes a map from the listing\nexample: `!deleteMap 86`");
         }else if(args == "claim" || args == "!claim"){
-            message.channel.sendMessage("`!claim <mapID> | <task> | <optionalCollabUser1> | <optionalCollabUser2> (etc...)` assigns a user to a task on a mapset\nexample: `!claim 86 | insane`, or for a collab difficulty, `!claim 86 | insane | Nyquill`");
+            message.channel.sendMessage("`!claim <mapID> | <task>` assigns the sender to a task. `!claim <mapID> | <task> | <collabMapper> | <collabMapper> (etc.)` assigns the sender and any listed collab mappers to the same task\nexample: `!claim 86 | insane`, or for a collab difficulty, `!claim 86 | insane | Nyquill`");
         }else if(args == "unclaim" || args == "!unclaim"){
-            message.channel.sendMessage("`!unclaim <mapID> | <task>` removes a user from a specified task\nexample: `!unclaim 86 | insane`");
+            message.channel.sendMessage("`!unclaim <mapID> | <task>` removes a specified task from a mapset. A mapset host can remove anyone's claims, while a guest difficulty creator can only remove their own claims. If there are 2+ of the same task on a mapset, a mapset host using !unclaim will remove claims chronologically.\nexample: `!unclaim 86 | insane`");
         }else if(args == "lock" || args == "!lock"){
             message.channel.sendMessage("`!lock <mapID>` disables all claims for a mapset\n`!lock <mapID> | <task>` disables claims for a specific task on a mapset\nexample: `!lock 86 | insane`");
         }else if(args == "unlock" || args == "!unlock"){
             message.channel.sendMessage("`!unlock <mapID>` re-enables all claims for a mapset\n`!lock <mapID> | <task>` re-enables claims for a specific task on a mapset\nexample: `!unlock 86 | insane`");
-        }else if(args == "linkmap" || args == "!linkmap"){
-            message.channel.sendMessage("`!linkMap <mapID> | <onlineID>` adds an osu!web link to a map. 'OnlineID' is the number following 'beatmapsets' in a map's URL.\nexample: `!linkMap 86 | 884977`");
+        }else if(args == "link" || args == "!link"){
+            message.channel.sendMessage("`!link <mapID> | <onlineID>` adds an osu!web link to a map. 'OnlineID' is the number following 'beatmapsets' in a map's URL.\nexample: `!link 86 | 884977`");
         }else if(args == "done" || args == "!done"){
             message.channel.sendMessage("`!done <mapID>` marks a mapset's status as complete\n`!done <mapID> | <task>` marks a specific task of a mapset as complete in its corresponding cell\nexample: `!done 86 | insane`");
         }else if(args == "wip" || args == "!wip"){
@@ -88,7 +92,7 @@ class helpCommand extends commando.Command
         }else if(args == "unnom" || args == "!unnom"){
             message.channel.sendMessage("`!unNom <mapID>` removes a user in a Beatmap Nominator reserve slot for a mapset\nexample: `!unNom 225`");
         }else if(args == "mod" || args == "!mod"){
-            message.channel.sendMessage("`!mod <mapID>` logs when a user has modded a mapset\nexample: `!unNom 225`");
+            message.channel.sendMessage("`!mod <mapID>` logs when a user has modded a mapset\nexample: `!mod 225`");
         }else{
             message.channel.sendMessage("That command doesn't exist! Check your spelling.");
         }

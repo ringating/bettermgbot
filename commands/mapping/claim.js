@@ -88,16 +88,17 @@ class ClaimCommand extends commando.Command
         }else if(beatmap.categoriesLocked.indexOf(printedTask) >= 0){
             message.channel.send("You can't claim tasks that have been locked!");
         }else{
-            var task = beatmap.addTask(printedTask, user);
-            if(collabUsers.length > 0)
-            {
-                task.mappers.push.apply(task.mappers, collabUsers);
-            }
             if(beatmap.status == "Done")
             {
                 beatmap.status = "WIP"
             }
-            if(beatmap.allLocked){
+
+            var task = beatmap.addTask(printedTask, user);
+            if(collabUsers.length > 0)
+            {
+                task.mappers.push.apply(task.mappers, collabUsers);
+                message.channel.send(`**${user}** has claimed a collab for **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**`);
+            }else if(beatmap.allLocked){
                 message.channel.send(`**${user}** has claimed **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**. (host bypasses lock)`);
             }else{
                 message.channel.send(`**${user}** has claimed **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**`);

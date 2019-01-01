@@ -25,8 +25,11 @@ class NomCommand extends commando.Command
         //find beatmap
         var beatmap = maps.getBeatmap(mapID);
 
-        
-        if(beatmap == undefined){
+        if(args.length == 0)
+        {
+            message.channel.send("You must specify a map ID!");
+        }
+        else if(beatmap == undefined){
             message.channel.send("That map doesn't exist! Re-check your Map ID.");
         }else{
             var taskCount = 0;
@@ -46,7 +49,9 @@ class NomCommand extends commando.Command
             //    message.channel.send("not BN");
             //}
             else if(beatmap.bns.length > 1){
-                message.channel.send("There are already two Beatmap Nominator reserved for this mapset!");
+                message.channel.send("There are already two Beatmap Nominators reserved for this mapset!");
+            }else if(beatmap.bns.indexOf(user) >= 0){
+                message.channel.send("You've already reserved your nomination for this map!");
             }
             else{
                 beatmap.bns.push(user);

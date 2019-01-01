@@ -24,7 +24,7 @@ class UnclaimCommand extends commando.Command
 
 
         //process arguments
-        var formatError = "Incorrect format! The format is `!newmap artist | title`";
+        var formatError = "Incorrect format! The format is `!unclaim mapID | task`";
         var splits = args.split("|");
         if(splits.length < 2)
         {
@@ -33,12 +33,6 @@ class UnclaimCommand extends commando.Command
         }
         var mapID = splits[0].trim();
         var name = splits[1].trim().toLowerCase();
-        var collabUsers = [];
-        if(splits.length > 2){ 
-            for(var i=2; i < splits.length; i++){
-                collabUsers.push(splits[i].trim()); //if printedTask of beatmap does not exist
-            }
-        }
         if(mapID.length == 0 || name.length == 0)
         {
             message.channel.send(formatError);
@@ -66,23 +60,27 @@ class UnclaimCommand extends commando.Command
         }
 
         //find task
-        var taskPositionInArray = beatmap.getTaskIndex(printedTask, user);
-        var myTask = beatmap.getTask(printedTask, user);
-        console.log(myTask);
-        console.log(taskPositionInArray);
+        if(beatmap != undefined){
+            var taskPositionInArray = beatmap.getTaskIndex(printedTask, user);
+            var taskPositionInArrayAsHost = beatmap.getTaskIndexAsHost(printedTask);
+        }
+        
 
         
         if(beatmap == undefined){
             message.channel.send("That map doesn't exist! Re-check your Map ID.");
         }else if(invalidTask()){
             message.channel.sendMessage(`**${name}** is an invalid task! Tasks include \`easy\`, \`normal\`, \`hard\`, \`insane\`, \`extra\`, \`storyboard\`, \`background\`, and \`skin\``);
-        }else if(taskPositionInArray < 0){
-            message.channel.send(`You are not assigned to an **${printedTask}** task on that mapset!`);
-        }else if(beatmap.host != user && beatmap.tasks[taskPositionInArray].mappers != user){
+        }else if(taskPositionInArrayAsHost < 0){
+            message.channel.send(`There are no claims for the **${printedTask}** task on that mapset!`);
+        }else if(beatmap.host == user){
+            message.channel.send(`You've removed **${beatmap.tasks[taskPositionInArrayAsHost].mappers[0]}**'s claim for **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**!`);
+            beatmap.tasks.splice(taskPositionInArrayAsHost, 1);
+        }else if(taskPositionInArray == -1){
             message.channel.send("You cannot edit someone else's claim unless you are the mapset's host!");
         }else{
+            message.channel.send(`You've removed **${beatmap.tasks[taskPositionInArray].mappers[0]}**'s claim for **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**!`);
             beatmap.tasks.splice(taskPositionInArray, 1);
-            message.channel.send(`You've removed the claim for **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}**!`);
         } 
     }
 }

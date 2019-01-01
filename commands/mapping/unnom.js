@@ -25,16 +25,32 @@ class UnnomCommand extends commando.Command
         //find beatmap
         var beatmap = maps.getBeatmap(mapID);
 
-        
-        if(beatmap == undefined){
+        if(args.length == 0){
+            message.channel.send("You must specify a map ID!");
+        }
+        else if(beatmap == undefined){
             message.channel.send("That map doesn't exist! Re-check your Map ID.");
-        }else if(beatmap.bns.indexOf(user) < 0){
-            message.channel.send("You didn't have a nomination for this mapset reserved!");
-        //}else if(USER ALREADY NOMINATED){
-        //    message.channel.send("There are already two Beatmap Nominator reserved for this mapset!");
         }else{
-            beatmap.bns.splice(beatmap.bns.indexOf(user), 1);
-            message.channel.send(`You've been removed from the Beatmap Nominator reserve list for **${beatmap.artist}** - **${beatmap.title}**!`);
+            var taskCount = 0;
+            for(var i=0; beatmap.tasks[i] != undefined; i++)
+            {
+                if(beatmap.tasks[i].mappers.indexOf(user) >= 0)
+                {
+                    taskCount++;
+                    console.log(taskCount);
+                }
+            }
+            if(taskCount > 0)
+            {
+                message.channel.send("You can't unreserve nominations for mapsets you participated in!");
+            }else if(beatmap.bns.indexOf(user) < 0){
+                message.channel.send("You didn't have a nomination for this mapset reserved!");
+            //}else if(USER ALREADY NOMINATED){
+            //    message.channel.send("There are already two Beatmap Nominator reserved for this mapset!");
+            }else{
+                beatmap.bns.splice(beatmap.bns.indexOf(user), 1);
+                message.channel.send(`You've been removed from the Beatmap Nominator reserve list for **${beatmap.artist}** - **${beatmap.title}**!`);
+            }
         }
     }
 }

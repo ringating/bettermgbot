@@ -115,6 +115,20 @@ class Beatmap
         return -1;
     }
 
+    //for when host needs to unclaim something
+    getTaskIndexAsHost(name)
+    {
+        var i;
+        for(i = 0; i < this.tasks.length; ++i)
+        {
+            if(this.tasks[i].name == name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     copy()
     {
         var ret = new Beatmap(this.id, this.artist, this.title, this.host);
