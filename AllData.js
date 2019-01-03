@@ -5,7 +5,7 @@ const qt = require('./questClasses.js');
 const ur = require('./userClasses.js');
 const points = require('./pointsClasses.js');
 
-const DataPath = 'testfile34.json';
+const DataPath = 'testfile35.json';
 
 class AllData
 {
@@ -88,7 +88,7 @@ class AllData
 
         //total points and rank
         this.users.users.forEach(user =>{
-            user.totalPoints += user.easyPoints + user.normalPoints + user.hardPoints + user.insanePoints + user.extraPoints + user.storyboardPoints + user.backgroundPoints + user.skinPoints + user.questPoints + user.modPoints + user.hostPoints;
+            user.totalPoints += Math.round(user.easyPoints + user.normalPoints + user.hardPoints + user.insanePoints + user.extraPoints + user.storyboardPoints + user.backgroundPoints + user.skinPoints + user.questPoints + user.modPoints + user.hostPoints);
             if(user.totalPoints < 100){
                 user.rank = 0;
             }else if(user.totalPoints < 250){
@@ -132,10 +132,8 @@ function updatePartyRank()
         party.members.forEach(username =>{
             var user = allData.users.getUser(username);
             partyCumulativeRank += user.rank;
-            //console.log(user.rank);
         })
         party.rank = Math.round(partyCumulativeRank/party.members.length);
-        //console.log("party rank: " + party.rank);
     })
 }
 

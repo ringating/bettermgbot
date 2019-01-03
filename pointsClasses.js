@@ -52,16 +52,16 @@ class PointsCalculation
             //console.log(taskAndStatus);
             if(taskAndStatus.mapsetStatus == "Done")
             {
-                easyPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Easy", 5, 2);
+                easyPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.task.mappers, taskAndStatus.mapsetQuest, "Easy", 5, 2);
                 //console.log(easyPoints);
                 //console.log(taskAndStatus.task.name)
-                normalPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Normal", 6, 2);
-                hardPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Hard", 7, 2);
-                insanePoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Insane", 8, 2);
-                extraPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Extra", 8, 2);
-                storyboardPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Storyboard", 10, 3);
-                backgroundPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Background", 2, 0);
-                skinPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.mapsetQuest, "Skin", 2, 0);
+                normalPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.task.mappers, taskAndStatus.mapsetQuest, "Normal", 6, 2);
+                hardPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.task.mappers, taskAndStatus.mapsetQuest, "Hard", 7, 2);
+                insanePoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.task.mappers, taskAndStatus.mapsetQuest, "Insane", 8, 2);
+                extraPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.task.mappers, taskAndStatus.mapsetQuest, "Extra", 8, 2);
+                storyboardPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.task.mappers, taskAndStatus.mapsetQuest, "Storyboard", 10, 3);
+                backgroundPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.task.mappers, taskAndStatus.mapsetQuest, "Background", 2, 0);
+                skinPoints += this.calculateSpecificTaskPoints(taskAndStatus.task.name, taskAndStatus.task.mappers, taskAndStatus.mapsetQuest, "Skin", 2, 0);
             }
         }) 
         
@@ -78,7 +78,7 @@ class PointsCalculation
 
     }
 
-    calculateSpecificTaskPoints(name, quest, targetName, taskPoints, questPoints)
+    calculateSpecificTaskPoints(name, mappers, quest, targetName, taskPoints, questPoints)
     {
     var pointsVar = 0;
     if(name == targetName)
@@ -89,7 +89,7 @@ class PointsCalculation
                 pointsVar += questPoints;
             }
         }
-    return pointsVar;
+    return (pointsVar / mappers.length);
     }
 
 }

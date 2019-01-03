@@ -28,6 +28,8 @@ class PartiesCollection
         var partyVar = (new Party(name, leader));
         this.parties.push(partyVar);
         this.partySearch[name.toLowerCase()] = partyVar;
+        partyVar.members.push(leader);
+
     }
 
     isLeader(user)
