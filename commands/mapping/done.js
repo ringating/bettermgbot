@@ -58,8 +58,10 @@ class DoneCommand extends commando.Command
         if(name != ""){
             taskPositionInArray = beatmap.getTaskIndex(printedTask, user);
             myTask = beatmap.getTask(printedTask, user);
-            console.log(myTask);
-            console.log(taskPositionInArray);
+            if(myTask == false){
+                message.channel.send("That task doesn't exist on that mapset!");
+                return;
+            }
         }
         
         const Done = "Done";
@@ -73,7 +75,10 @@ class DoneCommand extends commando.Command
                 message.channel.send("You can't edit someone else's mapset!");
             }else if(beatmap.status == Done){
                 message.channel.send("This mapset is already marked as complete!");
-            }else{
+            }else if(beatmap.tasks[0] == undefined){
+                message.channel.send("This mapset has no tasks!");
+            }
+            else{
                 beatmap.status = Done;
                 for(var i=0; beatmap.tasks[i] != undefined; i++)
                 {

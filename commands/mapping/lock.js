@@ -51,6 +51,8 @@ class LockCommand extends commando.Command
         function printTask(name){
             return name.charAt(0).toUpperCase() + name.substr(1)
         }
+
+        var everyTask = ["Easy", "Normal", "Hard", "Insane", "Extra", "Storyboard", "Background", "Skin"];
         
         if(beatmap == undefined){
             message.channel.send("That map doesn't exist! Re-check your Map ID.");
@@ -59,7 +61,7 @@ class LockCommand extends commando.Command
         }else if(beatmap.host != user){
             message.channel.send("You can't edit someone else's mapset!");
         }else if(name == ""){
-            beatmap.allLocked = true;
+            beatmap.categoriesLocked = everyTask;
             message.channel.send(`All claims for **${beatmap.artist}** - **${beatmap.title}** have been locked!`);
         }else if(invalidTask()){
             message.channel.sendMessage(`**${printedTask}** is an invalid task! Tasks include \`easy\`, \`normal\`, \`hard\`, \`insane\`, \`extra\`, \`storyboard\`, \`background\`, and \`skin\``);

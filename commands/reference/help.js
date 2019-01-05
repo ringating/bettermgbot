@@ -38,7 +38,7 @@ class helpCommand extends commando.Command
         }else if(args == "newparty" || args == "!newparty"){
             message.channel.sendMessage("`!newParty <partyName>` creates a new party and adds the sender to its member list\nexample: `!newParty the anime bros`");
         }else if(args == "joinparty" || args == "!joinparty"){
-            message.channel.sendMessage("`!joinParty <partyName>` adds the sender to the party's member list\nexample: `!joinParty the rival party");
+            message.channel.sendMessage("`!joinParty <partyName>` adds the sender to the party's member list\nexample: `!joinParty the rival party`");
         }else if(args == "leaveparty" || args == "!leaveparty"){
             message.channel.sendMessage("`!leaveParty` removes a user from their current party");
         }else if(args == "newleader" || args == "!newleader"){

@@ -58,8 +58,10 @@ class WIPCommand extends commando.Command
         if(name != ""){
             taskPositionInArray = beatmap.getTaskIndex(printedTask, user);
             myTask = beatmap.getTask(printedTask, user);
-            console.log(myTask);
-            console.log(taskPositionInArray);
+            if(myTask == false){
+                message.channel.send("That task doesn't exist on that mapset!");
+                return;
+            }
         }
         
         const Done = "Done";

@@ -40,6 +40,9 @@ class CompleteQuestCommand extends commando.Command
         {
             message.channel.send(`Only pishifat can do that.`);
         }
+        else if(quest.status == "Done"){
+            message.channel.send(`Quest already complete.`);
+        }
         else
         {
             //remove quest from party's assigned quest

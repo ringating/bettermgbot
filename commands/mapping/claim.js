@@ -70,6 +70,20 @@ class ClaimCommand extends commando.Command
         // }
 
 
+        //check if task is sb/bg/skin and someone else claimed it already
+        function taskOnlyAllowsOneUser(){
+            var result = false;
+            if(printedTask == "Background" || printedTask == "Storyboard" || printedTask == "Skin"){
+                beatmap.tasks.forEach(task =>{
+                    if(task.name == "Background" || task.name == "Storyboard" || task.name == "Skin"){
+                        result = true;
+                    }
+                });
+            }
+            return result;
+        }
+
+
         //capitalize first letter of task name
         var printedTask = printTask(name);
         function printTask(name){
@@ -85,8 +99,10 @@ class ClaimCommand extends commando.Command
             message.channel.send("You can't claim tasks on mapsets that have been locked!");
         }else if(beatmap.bns.length > 0 && beatmap.bns.indexOf(user) >= 0){
             message.channel.send("You must remove your reserved nomination before claiming a task! Use the command `!unnom mapID`");
-        }else if(beatmap.categoriesLocked.indexOf(printedTask) >= 0){
+        }else if(beatmap.categoriesLocked.indexOf(printedTask) >= 0 && beatmap.host != user){
             message.channel.send("You can't claim tasks that have been locked!");
+        }else if(taskOnlyAllowsOneUser()){
+            message.channel.send("Only one user can claim that task!");
         }else{
             if(beatmap.status == "Done")
             {

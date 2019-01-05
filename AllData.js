@@ -24,10 +24,13 @@ class AllData
             if(err)
             {
                 console.log("fs.readFile returned error: " + err);
-                this.maps.addBeatmap(0,"EXAMPLE_ARTIST","EXAMPLE_TITLE","EXAMPLE_HOST");
-                this.parties.addParty("party name", "username");
-                this.quests.addQuest(0, "quest name", "quest description!!!", 25, 4, 8, 0);
-                this.users.addUser("sample user");
+                this.maps.addBeatmap(0,"EXAMPLE_ARTIST","EXAMPLE_TITLE","EXAMPLE_USER");
+                this.parties.addParty("EXAMPLE_PARTY", "EXAMPLE_USER");
+                this.quests.addQuest(0, "*namirin map pack", "Create at least 5 mapsets for *namirin songs, each hosted by a different user. ", 20, 5, 10, 0);
+                this.quests.addQuest(1, "Culprate mini-map pack", "Create at least 3 mapsets for Culprate songs, each hosted by a different user", 10, 3, 8, 0);
+                this.quests.addQuest(2, "Ben Briggs map pack", "Create at least 6 mapsets for Ben Briggs songs, our least mapped Featured Artist :(. Each must be hosted by a different user", 30, 6, 12, 0);
+                this.quests.addQuest(3, "New Featured Artist map pack", "Create at least 5 mapsets for an artist that hasn't yet been announced! You'll need to keep this one a secret.", 25, 5, 10, 1);
+                this.users.addUser("EXAMPLE_USER");
                 console.log("*new map list json generated*");
                 return;
             }

@@ -50,7 +50,7 @@ class NewQuestCommand extends commando.Command
 
 
         //confirmation message
-        message.channel.send(`The **${questName}** quest has been created! It's ID is **${id}**`);
+        message.channel.send(`The **${questName}** quest has been created! Its ID is **${id}**`);
         }
     }
 }

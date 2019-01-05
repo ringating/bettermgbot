@@ -55,7 +55,7 @@ class NewHostCommand extends commando.Command
         }else if(otherUserData == undefined){
             message.channel.send("That user isn't involved with the Mappers' Guild!");
         }else{
-            message.channel.send(`bro!`);
+            message.channel.send(`Host has been transferred!`);
             beatmap.host = otherUserData.name;
         }
     }

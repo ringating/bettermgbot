@@ -24,7 +24,7 @@ class UnlockCommand extends commando.Command
 
 
         //process arguments
-        var formatError = ("Incorrect format! The format is `!lock mapID` to lock a single mapset, or `!lock mapID | task` to lock a task on a mapset");
+        var formatError = ("Incorrect format! The format is `!unlock mapID` to lock a single mapset, or `!unlock mapID | task` to lock a task on a mapset");
         var splits = args.split("|");
         if(args.length == 0)
         {
@@ -51,23 +51,27 @@ class UnlockCommand extends commando.Command
         function printTask(name){
             return name.charAt(0).toUpperCase() + name.substr(1)
         }
+
+        var everyTask = ["Easy", "Normal", "Hard", "Insane", "Extra", "Storyboard", "Background", "Skin"];
         
         if(beatmap == undefined){
             message.channel.send("That map doesn't exist! Re-check your Map ID.");
-        }else if(!beatmap.allLocked){
-            message.channel.send("This mapset is already unlocked!");
         }else if(beatmap.host != user){
             message.channel.send("You can't edit someone else's mapset!");
-        }else if(name == ""){
-            beatmap.allLocked = false;
+        }else if(beatmap.categoriesLocked == []){
+            message.channel.send("There are no locked tasks for this mapset!");
+        }
+        else if(name == ""){
+            //beatmap.allLocked = false;
+            beatmap.categoriesLocked = [];
             message.channel.send(`All claims for **${beatmap.artist}** - **${beatmap.title}** have been unlocked!`);
         }else if(invalidTask()){
             message.channel.sendMessage(`**${printedTask}** is an invalid task! Tasks include \`easy\`, \`normal\`, \`hard\`, \`insane\`, \`extra\`, \`storyboard\`, \`background\`, and \`skin\``);
         }else if(beatmap.categoriesLocked.indexOf(printedTask) < 0){
-            message.channel.send("Claims are already disabled for this mapset!");
+            message.channel.send("Claims are already disabled for this task!");
         }else{
             beatmap.unlockCategory(printedTask);
-            message.channel.send(`Claims for **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}** have been disabled!`);
+            message.channel.send(`Claims for **${printedTask}** on **${beatmap.artist}** - **${beatmap.title}** have been enabled!`);
         }
     }
 }
